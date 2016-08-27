@@ -1,6 +1,6 @@
 # Instructions
 
-## Project 3: [Public Transportation App](FIXME)
+## Project 3: [Restaurant Reviews](https://classroom.udacity.com/nanodegrees/nd802/syllabus?activePartKey=8021345404)
 
 ...
 
