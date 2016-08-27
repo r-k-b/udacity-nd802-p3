@@ -1,7 +1,7 @@
 {
   "name": "@r-k-b/udacity-nd802-p3",
   "version": "1.0.0",
-  "description": "",
+  "description": "Udacity Sr Web Developer Nanodegree, Project 3: Restaurant Reviews",
   "main": "index.js",
   "scripts": {
     "start": "npm run serve",
@@ -9,8 +9,18 @@
     "gulp": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "6.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:r-k-b/udacity-nd802-p3.git"
+  },
   "author": "Robert K. Bell <robert.k.bell@gmail.com> (https://github.com/r-k-b)",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r-k-b/udacity-nd802-p2/issues"
+  },
   "devDependencies": {
     "babel-preset-modern": "1.1.0",
     "babelify": "7.3.0",
