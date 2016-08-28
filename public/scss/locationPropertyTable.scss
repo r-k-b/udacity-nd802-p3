@@ -1,0 +1,15 @@
+.location-properties {
+  &__caption {
+    min-width: 20em;
+  }
+
+  &__table {
+    border: 1px solid grey;
+  }
+
+  &__heading {
+    &--left {
+      text-align: left;
+    }
+  }
+}

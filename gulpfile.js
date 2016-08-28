@@ -41,7 +41,7 @@ function createBundle(srcIn) {
 
 
 const jsBundles = {
-  'js/main.js': createBundle('./public/js/main/index.js'),
+  'js/app.js': createBundle('./public/js/main/app.js'),
 };
 
 
@@ -89,7 +89,9 @@ gulp.task('copy', () =>
     gulp.src('public/imgs/**/*')
       .pipe(gulp.dest('build/public/imgs/')),
     gulp.src('public/*.json')
-      .pipe(gulp.dest('build/public/'))
+      .pipe(gulp.dest('build/public/')),
+    gulp.src('public/data/*.json')
+      .pipe(gulp.dest('build/public/data'))
   )
 );
 

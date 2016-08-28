@@ -20,14 +20,7 @@ function serveBuilt(x) {
 app.use(mount('/js', serveBuilt('js')));
 app.use(mount('/css', serveBuilt('css')));
 app.use(mount('/imgs', serveBuilt('imgs')));
-
-router.get('/', function* root() {
-  //noinspection JSUnusedGlobalSymbols
-  this.body = indexTemplate({
-    scripts: '<script src="/js/main.js" defer></script>',
-    content: 'heyo',
-  });
-});
+app.use(mount('/data', serveBuilt('data')));
 
 //noinspection JSUnusedLocalSymbols
 function singleFile(file) {
@@ -36,9 +29,20 @@ function singleFile(file) {
   };
 }
 
+// TODO: add service-worker, manifest
 // router.get('/manifest.json', singleFile('manifest.json'));
 // router.get('/sw.js', singleFile('sw.js'));
 // router.get('/sw.js.map', singleFile('sw.js.map'));
+
+// For now, we'll allow the client-side JS to handle every other route.
+// TODO: refine wildcard down to valid routes for app
+router.get('/(.*)', function* root() {
+  //noinspection JSUnusedGlobalSymbols
+  this.body = indexTemplate({
+    scripts: '<script src="/js/app.js" defer></script>',
+    content: '<div class="loadingscreen"><h1>Restaurant Reviewer</h1></div>"',
+  });
+});
 
 app
   .use(router.routes())
