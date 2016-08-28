@@ -13,7 +13,7 @@ const interestingLocationProperties = [
   'key'
 ];
 
-const classPrefix = base => sub => sub ? `${ base }__${ sub }` : base;
+const classPrefix = base => (sub, joiner = '__') => sub ? `${ base }${ joiner }${ sub }` : base;
 
 const lp = classPrefix('.location-properties');
 
