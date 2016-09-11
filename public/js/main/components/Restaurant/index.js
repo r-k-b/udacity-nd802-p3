@@ -2,7 +2,7 @@ import intent from './intent';
 import model from './model';
 import view from './view';
 
-function Task(sources) {
+function Restaurant(sources) {
   let props$ = sources.props;
   let action$ = intent(sources.DOM);
   let state$ = model(props$, action$);
@@ -14,4 +14,4 @@ function Task(sources) {
   }
 }
 
-export default Task;
+export default Restaurant;

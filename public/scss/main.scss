@@ -5,7 +5,7 @@
 html,
 body {
   padding: 0;
-  margin:  0;
+  margin: 0;
 }
 
 .loadingscreen {
@@ -14,4 +14,12 @@ body {
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+
+.code-preview {
+  max-height: 30vh;
+  max-width: 70em;
+  overflow: scroll;
+  margin: 1em;
+  background-color: #eeeeee;
 }

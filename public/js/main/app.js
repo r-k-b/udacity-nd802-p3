@@ -1,6 +1,6 @@
 import xs from 'xstream';
 import { run } from '@cycle/xstream-run';
-import { div, p, hr, pre, makeDOMDriver } from '@cycle/dom';
+import { div, h2, hr, pre, makeDOMDriver } from '@cycle/dom';
 
 import R from 'ramda';
 import stringify from 'json-stable-stringify';
@@ -9,7 +9,7 @@ import { createHistory } from 'history';
 import { makeHTTPDriver } from '@cycle/http';
 import { makeHistoryDriver } from '@cycle/history';
 
-import Restaurant from './components/Restaurant';
+import RestaurantList from './components/RestaurantList';
 
 const deserialize = x => JSON.parse(x);
 const serialize = (x, opts = {}) => stringify(x, R.merge(opts, { space: 2 }));
@@ -17,22 +17,10 @@ const serialize = (x, opts = {}) => stringify(x, R.merge(opts, { space: 2 }));
 function main(sources) {
   const request$ = xs.of(
     {
-      url: '/data/restaurants.json',
-      category: 'restaurant-list'
-    },
-    {
       url: '/data/reviews.json',
       category: 'all-reviews-list'
     }
   );
-
-  let restaurantsData$ = sources.HTTP
-      .select('restaurant-list')
-      .flatten()
-      .map(res => res.text)
-      .map(deserialize)
-      .map(R.head)
-    /*.startWith(null)*/;
 
   let allReviewsData$ = sources.HTTP
       .select('all-reviews-list')
@@ -41,29 +29,34 @@ function main(sources) {
       .map(deserialize)
     /*.startWith(null)*/;
 
-  const restaurant = Restaurant({
+  const restaurantList = RestaurantList({
     DOM: sources.DOM,
-    props: restaurantsData$,
+    // props: restaurantsData$.map(R.objOf('items')),
+    HTTP: sources.HTTP,
   });
 
   //noinspection UnnecessaryLocalVariableJS
   const sinks = {
     DOM: xs.combine(
       sources.History,
-      restaurant.DOM,
+      restaurantList.DOM,
       allReviewsData$
     )
-    // .startWith('???')
       .map(([history, restaurantsDom, reviews]) =>
         div([
           // view.headerVdom(),
           // hr(),
           // view.locationProps(history),
           restaurantsDom,
-          pre(serialize(reviews)),
+          hr(),
+          h2('Reviews'),
+          pre('.code-preview', serialize(reviews)),
         ])
       ),
-    HTTP: request$
+    HTTP: xs.merge(
+      request$,
+      restaurantList.HTTP
+    ),
   };
   return sinks;
 }
