@@ -1,6 +1,6 @@
 import xs from 'xstream';
 import { run } from '@cycle/xstream-run';
-import { div, h2, hr, pre, makeDOMDriver } from '@cycle/dom';
+import { div, span, h2, hr, pre, makeDOMDriver } from '@cycle/dom';
 
 import R from 'ramda';
 import stringify from 'json-stable-stringify';
@@ -47,6 +47,7 @@ function main(sources) {
           // view.headerVdom(),
           // hr(),
           // view.locationProps(history),
+
           restaurantsDom,
           hr(),
           h2('Reviews'),
@@ -62,7 +63,7 @@ function main(sources) {
 }
 
 run(main, {
-  DOM: makeDOMDriver('#app-container'),
+  DOM: makeDOMDriver('#app-container', { transposition: true }),
   History: makeHistoryDriver(createHistory()),
   HTTP: makeHTTPDriver(),
 });

@@ -19,7 +19,7 @@
   "author": "Robert K. Bell <robert.k.bell@gmail.com> (https://github.com/r-k-b)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/r-k-b/udacity-nd802-p2/issues"
+    "url": "https://github.com/r-k-b/udacity-nd802-p3/issues"
   },
   "devDependencies": {
     "@cycle/dom": "12.2.2",
@@ -60,5 +60,6 @@
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.7.0",
     "xstream": "6.1.0"
-  }
+  },
+  "dependencies": {}
 }

@@ -1,10 +1,10 @@
 import xs from 'xstream';
-import { has, map, is, merge } from 'ramda';
+import { compose, path, has, map, is, merge } from 'ramda';
 import { link, div, a, span, h1, pre } from '@cycle/dom';
 import stringify from 'json-stable-stringify';
 
 
-const excludeStreams = function(key, val) {
+const excludeStreams = function (key, val) {
   if (has('_ils', val)) {
     return '<Stream>'
   }
@@ -21,10 +21,25 @@ const serialize = (x, opts = {}) => {
   }
 };
 
+const listMoveButton = (label, ident) => a(
+  '.restaurant-list__items__move-button',
+  {
+    props: {
+      'href': '#',
+    },
+    attrs: {
+      'data-action': `move-to-${ident}`,
+    },
+  },
+  label
+);
+
 
 function view(state$) {
   return state$.map(restaurantList => {
     let { items, position } = restaurantList;
+
+    let itemsDom = map(path(['restaurant', 'DOM']), items);
 
     return div('.restaurant-list__outer', [
       link({
@@ -33,32 +48,11 @@ function view(state$) {
           href: './css/restaurant-list.css'
         }
       }),
-      a(
-        '.restaurant-list__items__move-button',
-        {
-          props: {
-            'href': '#',
-          },
-          attrs: {
-            'data-action': 'move-to-previous',
-          }
-        },
-        'Previous'
-      ),
-      a(
-        '.restaurant-list__items__move-button',
-        {
-          props: {
-            'href': '#',
-          },
-          attrs: {
-            'data-action': 'move-to-next',
-          },
-        },
-        'Next'
-      ),
-      div('.restaurant-list__items__outer', `wahey! pos=${position} items=${items.length}`),
-      pre('.restaurant-list__json.code-preview', serialize(restaurantList))
+      listMoveButton('Previous', 'previous'),
+      listMoveButton('Next', 'next'),
+      div(`wahey! pos=${position} items=${items.length}`),
+      div('.restaurant-list__items__outer', itemsDom),
+      pre('.restaurant-list__json.code-preview', serialize(restaurantList)),
     ])
   });
 }
