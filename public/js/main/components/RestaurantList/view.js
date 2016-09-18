@@ -1,25 +1,6 @@
 import xs from 'xstream';
 import { compose, path, has, map, is, merge } from 'ramda';
 import { link, div, a, span, h1, pre } from '@cycle/dom';
-import stringify from 'json-stable-stringify';
-
-
-const excludeStreams = function (key, val) {
-  if (has('_ils', val)) {
-    return '<Stream>'
-  }
-  return val
-};
-
-
-const serialize = (x, opts = {}) => {
-  try {
-    return stringify(x, merge(opts, { space: 2, replacer: excludeStreams }))
-  } catch (err) {
-    debugger;
-    return err.message
-  }
-};
 
 const listMoveButton = (label, ident) => a(
   '.restaurant-list__items__move-button',
@@ -50,9 +31,8 @@ function view(state$) {
       }),
       listMoveButton('Previous', 'previous'),
       listMoveButton('Next', 'next'),
-      div(`wahey! pos=${position} items=${items.length}`),
       div('.restaurant-list__items__outer', itemsDom),
-      pre('.restaurant-list__json.code-preview', serialize(restaurantList)),
+      // pre('.restaurant-list__json.code-preview', serialize(restaurantList)),
     ])
   });
 }

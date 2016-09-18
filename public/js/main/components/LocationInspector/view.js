@@ -1,9 +1,5 @@
 import { div, p, h1, header, table, thead, tbody, th, tr, td, caption, code, link } from '@cycle/dom';
 
-const headerVdom = () => header([
-  h1('Restaurant Reviewer')
-]);
-
 const interestingLocationProperties = [
   'pathname',
   'action',
@@ -17,7 +13,7 @@ const classPrefix = base => (sub, joiner = '__') => sub ? `${ base }${ joiner }$
 
 const lp = classPrefix('.location-properties');
 
-const locationProps = (x) => table(
+const viewLocationProps = (x) => table(
   lp('table'),
   [
     link({
@@ -46,7 +42,6 @@ const locationProps = (x) => table(
   ]
 );
 
-export default {
-  headerVdom,
-  locationProps,
+export {
+  viewLocationProps,
 }

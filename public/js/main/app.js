@@ -3,16 +3,14 @@ import { run } from '@cycle/xstream-run';
 import { div, span, h2, hr, pre, makeDOMDriver } from '@cycle/dom';
 
 import R from 'ramda';
-import stringify from 'json-stable-stringify';
 import switchPath from 'switch-path';
+import { deserialize } from './utils';
 import { createHistory } from 'history';
 import { makeHTTPDriver } from '@cycle/http';
 import { makeHistoryDriver } from '@cycle/history';
 
+import { viewLocationProps } from './components/LocationInspector/view';
 import RestaurantList from './components/RestaurantList';
-
-const deserialize = x => JSON.parse(x);
-const serialize = (x, opts = {}) => stringify(x, R.merge(opts, { space: 2 }));
 
 function main(sources) {
   const request$ = xs.of(
@@ -44,14 +42,11 @@ function main(sources) {
     )
       .map(([history, restaurantsDom, reviews]) =>
         div([
-          // view.headerVdom(),
+          // headerVdom(),
           // hr(),
-          // view.locationProps(history),
+          viewLocationProps(history),
 
           restaurantsDom,
-          hr(),
-          h2('Reviews'),
-          pre('.code-preview', serialize(reviews)),
         ])
       ),
     HTTP: xs.merge(
@@ -64,6 +59,6 @@ function main(sources) {
 
 run(main, {
   DOM: makeDOMDriver('#app-container', { transposition: true }),
-  History: makeHistoryDriver(createHistory()),
+  History: makeHistoryDriver(createHistory(), { capture: true }),
   HTTP: makeHTTPDriver(),
 });
