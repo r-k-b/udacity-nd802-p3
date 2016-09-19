@@ -29,6 +29,7 @@ function view(state$) {
           href: './css/restaurant-list.css'
         }
       }),
+      div(`position: ${ position }`),
       listMoveButton('Previous', 'previous'),
       listMoveButton('Next', 'next'),
       div(restaurantList.url),
