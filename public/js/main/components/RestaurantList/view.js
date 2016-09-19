@@ -31,6 +31,7 @@ function view(state$) {
       }),
       listMoveButton('Previous', 'previous'),
       listMoveButton('Next', 'next'),
+      div(restaurantList.url),
       div('.restaurant-list__items__outer', itemsDom),
       // pre('.restaurant-list__json.code-preview', serialize(restaurantList)),
     ])

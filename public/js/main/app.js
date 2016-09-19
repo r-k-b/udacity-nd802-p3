@@ -3,7 +3,6 @@ import { run } from '@cycle/xstream-run';
 import { div, span, h2, hr, pre, makeDOMDriver } from '@cycle/dom';
 
 import R from 'ramda';
-import switchPath from 'switch-path';
 import { deserialize } from './utils';
 import { createHistory } from 'history';
 import { makeHTTPDriver } from '@cycle/http';
@@ -29,6 +28,7 @@ function main(sources) {
 
   const restaurantList = RestaurantList({
     DOM: sources.DOM,
+    History: sources.History,
     // props: restaurantsData$.map(R.objOf('items')),
     HTTP: sources.HTTP,
   });

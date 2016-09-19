@@ -1,6 +1,6 @@
 import { merge } from 'ramda';
 import xs from 'xstream';
-
+import switchPath from 'switch-path';
 
 const updatePosition = (Σ, Δ) => {
   if (Δ.type === 'rel') {
@@ -27,11 +27,18 @@ function model(action$, props$) {
   // do we keep it within the length of items here, or elsewhere?
   let absolutePosition$ = positionMovement$.fold(updatePosition, 0);
 
-  return xs.combine(sanitizedProps$, absolutePosition$)
-    .map(([props, position]) => merge(
+  let url$ = action$.map(
+    a =>
+      a.value
+  )
+    .startWith('/');
+
+  return xs.combine(sanitizedProps$, absolutePosition$, url$)
+    .map(([props, position, url]) => merge(
       props,
       {
         position,
+        url,
       }
     ));
 }

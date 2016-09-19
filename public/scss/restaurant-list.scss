@@ -1,3 +1,5 @@
+@import "_utils";
+
 .restaurant-list {
   &__items {
     &__move-button {
@@ -22,5 +24,15 @@
     padding: 1em;
     text-align: center;
     flex: 0 0 calc(100% / 3);
+  }
+}
+
+.restaurant__image {
+  object-fit: cover;
+
+  &__outer {
+    @extend %embed-responsive;
+    @extend %embed-responsive--16by9;
+    min-width: 14em;
   }
 }

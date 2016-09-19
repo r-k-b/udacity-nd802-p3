@@ -50,15 +50,15 @@ function RestaurantList(sources) {
   });
 
   let restaurantsData$ = sources.HTTP
-      .select('restaurant-list')
-      .flatten()
-      .map(res => res.text)
-      .map(deserialize)
+    .select('restaurant-list')
+    .flatten()
+    .map(res => res.text)
+    .map(deserialize)
     .map(objOf('items'));
 
   let proxyItemAction$ = xs.create();
 
-  let action$ = intent(sources.DOM, proxyItemAction$);
+  let action$ = intent(sources.DOM, sources.History, proxyItemAction$);
 
   let state$ = model(action$, restaurantsData$);
 

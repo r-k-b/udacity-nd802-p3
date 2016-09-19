@@ -1,5 +1,14 @@
-import { merge } from 'ramda';
-import { div, span, h1, pre, a } from '@cycle/dom';
+import { merge, path } from 'ramda';
+import { img, div, span, h1, pre, a } from '@cycle/dom';
+
+
+/**
+ *
+ * @param restaurant {Object}
+ * @return {String}
+ */
+const getPic = restaurant => `${path(['mainPhoto', 'originalSize'], restaurant)}?random=${restaurant.index}`;
+
 
 function view(state$) {
   return state$.map(restaurant => {
@@ -19,6 +28,13 @@ function view(state$) {
       div('.restaurant__rating', [
         span('.restaurant__rating__label', 'Rating:'),
         span('.restaurant__rating__number', ratingAggregate)
+      ]),
+      a('.restaurant__image__outer', [
+        img('.restaurant__image', {
+          props: {
+            src: getPic(restaurant),
+          }
+        }),
       ]),
       a(
         { props: { href: '#see-reviews' } },
