@@ -3,19 +3,20 @@ import xs from 'xstream';
 import switchPath from 'switch-path';
 
 const updatePosition = (Σ, Δ) => {
-  let α = Δ.lowerBound;
+  let Bₗ = Δ.lowerBound || 0;
+  let Bᵤ = Δ.upperBound || Number.MAX_SAFE_INTEGER; // todo: why is `x mod ∞` undefined?
 
   if (Δ.type === 'rel') {
     return mathMod(
-        Σ + Δ.value - α,
-        Δ.upperBound - α
-      ) + α;
+        Σ + Δ.value - Bₗ,
+        Bᵤ - Bₗ
+      ) + Bₗ;
   }
   if (Δ.type === 'abs') {
     return mathMod(
-        Δ.value - α,
-        Δ.upperBound - α
-      ) + α;
+        Δ.value - Bₗ,
+        Bᵤ - Bₗ
+      ) + Bₗ;
   }
   throw new TypeError('Unexpected `type` passed for position update.');
 };
