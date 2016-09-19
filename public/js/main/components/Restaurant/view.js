@@ -33,9 +33,11 @@ function view(state$) {
         img('.restaurant__image', {
           props: {
             src: getPic(restaurant),
+            alt: `The main photo of ${name}.`, // todo: check this alt text is appropriate
           }
         }),
       ]),
+      div('.restaurant__cuisine-type', `Cuisine type: ${restaurant.cuisineType}`),
       a(
         { props: { href: '#see-reviews' } },
         'See Reviews'
